@@ -1,13 +1,10 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import bodyParser from 'body-parser';
+import convert from 'xml-js';
 
 const app = express();
 const port = 8081;
-
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(bodyParser.json());
 
 app.get(`/`, async function (req, res) {
   const url =
@@ -17,8 +14,10 @@ app.get(`/`, async function (req, res) {
   };
   try {
     let response = await fetch(url, options);
-    console.log(response.body);
-    res.status(200);
+    const text = await response.text();
+    const xmlObject = JSON.parse(convert.xml2json(text));
+    res.status(200).json(xmlObject);
+    console.log(JSON.parse(convert.xml2json(text)));
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: `Internal Server Error.` });
