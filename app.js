@@ -2,9 +2,12 @@ import express from 'express';
 import fetch from 'node-fetch';
 import bodyParser from 'body-parser';
 import convert from 'xml-js';
+import cors from 'cors';
 
 const app = express();
 const port = 8081;
+
+app.use(cors());
 
 app.get(`/`, async function (req, res) {
   const url =
