@@ -1,7 +1,11 @@
 import express from 'express';
 import fetch from 'node-fetch';
+import xmlparser from 'express-xml-bodyparser';
+
 const app = express();
 const port = 8081;
+
+app.use(xmlparser());
 
 app.get(`/`, async function (req, res) {
   const url =
@@ -11,8 +15,7 @@ app.get(`/`, async function (req, res) {
   };
   try {
     let response = await fetch(url, options);
-    response = await JSON.parse(response.body);
-    console.log(response);
+    console.log(response.body);
     res.status(200);
   } catch (err) {
     console.log(err);
