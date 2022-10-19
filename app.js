@@ -1,11 +1,13 @@
 import express from 'express';
 import fetch from 'node-fetch';
-import xmlparser from 'express-xml-bodyparser';
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = 8081;
 
-app.use(xmlparser());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
 
 app.get(`/`, async function (req, res) {
   const url =
